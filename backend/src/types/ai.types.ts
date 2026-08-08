@@ -21,13 +21,13 @@ export interface EmbeddingResult {
   embedding: number[];
 }
 
-export interface OpenAIChatClient {
+export interface AIChatClient {
   createChatCompletion(
     messages: ChatMessage[],
     options?: ChatCompletionOptions,
   ): Promise<ChatCompletionResult>;
 }
 
-export interface OpenAIEmbeddingClient {
+export interface AIEmbeddingClient {
   createEmbedding(input: string, options?: EmbeddingOptions): Promise<EmbeddingResult>;
 }

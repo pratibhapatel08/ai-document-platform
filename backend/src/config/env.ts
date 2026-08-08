@@ -36,13 +36,13 @@ const envSchema = z.object({
     .default("sentence-transformers/all-MiniLM-L6-v2"),
 
   // Summary configuration
-  OPENAI_SUMMARY_MAX_CHUNK_CHARS: z.coerce
+  SUMMARY_MAX_CHUNK_CHARS: z.coerce
     .number()
     .int()
     .positive()
     .default(12000),
 
-  OPENAI_SUMMARY_SINGLE_PASS_MAX_CHARS: z.coerce
+  SUMMARY_SINGLE_PASS_MAX_CHARS: z.coerce
     .number()
     .int()
     .positive()

@@ -9,8 +9,8 @@ import {
 } from "../constants/summary.prompts";
 import { AppError } from "../utils/AppError";
 import { splitTextIntoChunks } from "../utils/textChunker";
-import { openaiService } from "./ai.service";
-import type { OpenAIChatClient } from "../types/openai.types";
+import { aiService } from "./ai.service";
+import type { AIChatClient } from "../types/ai.types";
 
 export interface GenerateSummaryParams {
   extractedText: string;
@@ -22,7 +22,7 @@ export interface SummaryGenerationResult {
 }
 
 const summarizeDirect = async (
-  client: OpenAIChatClient,
+  client: AIChatClient,
   text: string,
   title?: string,
 ): Promise<string> => {
@@ -38,7 +38,7 @@ const summarizeDirect = async (
 };
 
 const summarizeChunk = async (
-  client: OpenAIChatClient,
+  client: AIChatClient,
   chunk: string,
   chunkIndex: number,
   totalChunks: number,
@@ -59,7 +59,7 @@ const summarizeChunk = async (
 };
 
 const combineChunkSummaries = async (
-  client: OpenAIChatClient,
+  client: AIChatClient,
   chunkSummaries: string[],
   title?: string,
 ): Promise<string> => {
@@ -76,7 +76,7 @@ const combineChunkSummaries = async (
 
 export const generateDocumentSummary = async (
   params: GenerateSummaryParams,
-  client: OpenAIChatClient = openaiService,
+  client: AIChatClient = aiService,
 ): Promise<SummaryGenerationResult> => {
   const extractedText = params.extractedText.trim();
 
@@ -84,13 +84,13 @@ export const generateDocumentSummary = async (
     throw new AppError("Cannot generate summary from empty document text", 422);
   }
 
-  if (extractedText.length <= env.OPENAI_SUMMARY_SINGLE_PASS_MAX_CHARS) {
+  if (extractedText.length <= env.SUMMARY_SINGLE_PASS_MAX_CHARS) {
     const summary = await summarizeDirect(client, extractedText, params.title);
     return { summary };
   }
 
   const chunks = splitTextIntoChunks(extractedText, {
-    maxChunkSize: env.OPENAI_SUMMARY_MAX_CHUNK_CHARS,
+    maxChunkSize: env.SUMMARY_MAX_CHUNK_CHARS,
   });
 
   if (chunks.length === 0) {
@@ -116,7 +116,7 @@ export const generateDocumentSummary = async (
 
 export const refreshDocumentSummary = async (
   params: GenerateSummaryParams,
-  client: OpenAIChatClient = openaiService,
+  client: AIChatClient = aiService,
 ): Promise<SummaryGenerationResult> => {
   return generateDocumentSummary(params, client);
 };

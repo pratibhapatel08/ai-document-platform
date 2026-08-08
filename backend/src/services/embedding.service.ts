@@ -1,7 +1,7 @@
 import { AppError } from "../utils/AppError";
 import { prepareTextForEmbedding } from "../utils/embedding.helpers";
 import { openaiService } from "./ai.service";
-import type { OpenAIEmbeddingClient } from "../types/openai.types";
+import type { OpenAIEmbeddingClient } from "../types/ai.types";
 
 export const generateDocumentEmbedding = async (
   extractedText: string,

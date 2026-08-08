@@ -6,11 +6,11 @@ import type {
   ChatMessage,
   EmbeddingOptions,
   EmbeddingResult,
-  OpenAIChatClient,
-  OpenAIEmbeddingClient,
-} from "../types/openai.types";
+  AIChatClient,
+  AIEmbeddingClient,
+} from "../types/ai.types";
 
-class OpenAIService implements OpenAIChatClient, OpenAIEmbeddingClient {
+class AIService implements AIChatClient, AIEmbeddingClient {
   private readonly groqApiKey: string;
   private readonly huggingFaceApiKey: string;
 
@@ -176,9 +176,9 @@ class OpenAIService implements OpenAIChatClient, OpenAIEmbeddingClient {
   }
 }
 
-export const openaiService = new OpenAIService(
+export const aiService = new AIService(
   env.GROQ_API_KEY,
   env.HUGGINGFACE_API_KEY,
 );
 
-export { OpenAIService };
+export { AIService };
