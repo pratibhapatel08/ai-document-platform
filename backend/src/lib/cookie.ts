@@ -33,7 +33,7 @@ export const getAuthCookieOptions = (): CookieOptions => {
   return {
     httpOnly: true,
     secure: isProduction,
-    sameSite: isProduction ? "strict" : "lax",
+    sameSite: isProduction ? "none" : "lax",
     maxAge: parseExpiryToMs(env.JWT_EXPIRES_IN),
     path: "/",
   };
@@ -47,7 +47,7 @@ export const clearAuthCookie = (res: Response): void => {
   res.clearCookie(env.COOKIE_NAME, {
     httpOnly: true,
     secure: env.NODE_ENV === "production",
-    sameSite: env.NODE_ENV === "production" ? "strict" : "lax",
+    sameSite: env.NODE_ENV === "production" ? "none" : "lax",
     path: "/",
   });
 };
