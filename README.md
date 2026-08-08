@@ -4,7 +4,7 @@ A full-stack document management platform built with React, Node.js, Express, an
 
 The backend uses Groq for LLM-based summarization and Hugging Face for generating document/query embeddings. Embeddings are stored in MongoDB Atlas and queried through Atlas Vector Search. Redis is used as an optional cache for semantic search results.
 
-Project status: Local development / pre-deployment
+Project status: Production-ready assessment project / deployed
 
 Features
 
@@ -85,6 +85,7 @@ Document deletion
 AI summary regeneration
 
 Processing and success/failure metrics
+
 
 Backend & Security
 
@@ -454,7 +455,7 @@ Getting Started
 
 1. Clone the repository
 
-git clone <repository-url>
+git clone https://github.com/pratibhapatel08/ai-document-platform.git
 cd AI-DOCUMENT-PLATFORM
 
 2. Configure the backend
@@ -845,6 +846,52 @@ The Swagger configuration is maintained in:
 
 backend/src/config/swagger.ts
 
+Production Deployment
+
+The application is designed to run as separate frontend and backend services.
+
+Deployment Components
+
+GitHub Repository
+       │
+       ├── Frontend Docker Image
+       │        ↓
+       │     Frontend Hosting
+       │
+       └── Backend Docker Image
+                ↓
+           Backend Hosting
+                │
+        ┌───────┼────────┐
+        ↓       ↓        ↓
+   MongoDB   Groq     Hugging Face
+    Atlas      │          │
+        │      └──────┬───┘
+        │             ↓
+        └────── Backend API
+                 │
+               Redis
+
+CI/CD
+
+The recommended production workflow is:
+
+Git Push
+   ↓
+GitHub Actions
+   ↓
+Install Dependencies
+   ↓
+Build / Validate
+   ↓
+Build Docker Images
+   ↓
+Deploy
+   ↓
+Health Check
+
+Production secrets must be configured in the hosting platform's environmentvariables or GitHub Actions secrets and must not be committed to the repository.
+
 Docker
 
 Both applications include production-oriented Dockerfiles.
@@ -1016,9 +1063,9 @@ Add document sharing and collaboration
 
 Project Status
 
-The application is currently configured for local development and is not yet deployed.
+The application is configured for local development and production deployment.
 
-Production deployment can be added after validating the complete local workflow:
+Production deployment follows the same application workflow validated locally:
 
 Authentication
       ↓
@@ -1035,6 +1082,43 @@ MongoDB Vector Storage
 Semantic Search
       ↓
 Redis Cache
+
+Demo / Interview Access
+
+For assessment and interview testing, provide the deployed application URL andseparate demo credentials to the evaluator.
+
+Live Application
+
+Frontend: https://ai-document-platform-frontend.onrender.com
+Backend API: https://ai-document-platform-f08a.onrender.com
+Swagger: https://ai-document-platform-f08a.onrender.com/api/docs
+
+Admin Demo Account
+
+Email: test3@example.com
+Password: Test12345
+
+User Demo Account
+
+Email: <USER_EMAIL>
+Password: <USER_PASSWORD>
+
+>Security Note: The credentials provided above are for application login only.
+> Sensitive credentials such as MongoDB Atlas credentials, API keys, JWT secrets,
+> and production environment variables are not included in this repository.
+RBAC Test Flow
+
+The evaluator can verify the following:
+
+Log in with the User account and access user-level document features.
+
+Log in with the Admin account and access the Admin Dashboard.
+
+Verify that admin-only API operations are protected by backend RBAC middleware.
+
+Verify document upload, AI summary generation, and semantic search.
+
+Verify that user-owned document access is separated from platform-wide admin access.
 
 License
 
