@@ -6,7 +6,7 @@ export {
 export type { AuthResult } from "./auth.service";
 export { uploadDocument, refreshDocumentSummaryById } from "./document.service";
 export { generateDocumentEmbedding, generateQueryEmbedding } from "./embedding.service";
-export { openaiService, OpenAIService } from "./ai.service";
+export { aiService, AIService } from "./ai.service";
 export { searchDocumentsByQuery } from "./search.service";
 export {
   generateDocumentSummary,

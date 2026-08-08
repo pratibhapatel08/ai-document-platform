@@ -1,11 +1,11 @@
 import { AppError } from "../utils/AppError";
 import { prepareTextForEmbedding } from "../utils/embedding.helpers";
-import { openaiService } from "./ai.service";
-import type { OpenAIEmbeddingClient } from "../types/ai.types";
+import { aiService } from "./ai.service";
+import type { AIEmbeddingClient } from "../types/ai.types";
 
 export const generateDocumentEmbedding = async (
   extractedText: string,
-  client: OpenAIEmbeddingClient = openaiService,
+  client: AIEmbeddingClient = aiService,
 ): Promise<number[]> => {
   const preparedText = prepareTextForEmbedding(extractedText);
 
@@ -19,7 +19,7 @@ export const generateDocumentEmbedding = async (
 
 export const generateQueryEmbedding = async (
   query: string,
-  client: OpenAIEmbeddingClient = openaiService,
+  client: AIEmbeddingClient = aiService,
 ): Promise<number[]> => {
   const preparedQuery = query.trim();
 
