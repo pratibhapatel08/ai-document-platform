@@ -40,13 +40,13 @@ const envSchema = z.object({
     .number()
     .int()
     .positive()
-    .default(12000),
+    .default(8000),
 
   SUMMARY_SINGLE_PASS_MAX_CHARS: z.coerce
     .number()
     .int()
     .positive()
-    .default(80000),
+    .default(20000),
 
   // MongoDB Atlas Vector Search
   ATLAS_VECTOR_SEARCH_INDEX: z
